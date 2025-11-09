@@ -1,0 +1,30 @@
+# test.txt - Команди для тестування Частини 2
+# Сервер запущено на: http://127.0.0.1:8000
+# Використовуємо curl.exe, оскільки тестування відбувається у PowerShell.
+
+# 1. Завантаження тестової картинки (виконати один раз)
+# curl.exe https://http.cat/200 -o test_image.jpeg
+
+# 2. ТЕСТ GET (Кеш порожній)
+# ОЧІКУВАНО: 404 Not Found
+curl.exe -i -X GET http://127.0.0.1:8000/200
+
+# 3. ТЕСТ PUT (Запис картинки в кеш)
+# ОЧІКУВАНО: 201 Created
+curl.exe -i -X PUT -T test_image.jpeg http://127.0.0.1:8000/200
+
+# 4. ТЕСТ GET (Перевірка кешу)
+# ОЧІКУВАНО: 200 OK (і Content-Type: image/jpeg)
+curl.exe -i -X GET http://127.0.0.1:8000/200
+
+# 5. ТЕСТ DELETE (Видалення картинки)
+# ОЧІКУВАНО: 200 OK
+curl.exe -i -X DELETE http://127.0.0.1:8000/200
+
+# 6. ТЕСТ GET (Перевірка видалення)
+# ОЧІКУВАНО: 404 Not Found
+curl.exe -i -X GET http://127.0.0.1:8000/200
+
+# 7. ТЕСТ Недозволений метод (POST)
+# ОЧІКУВАНО: 405 Method Not Allowed
+curl.exe -i -X POST http://127.0.0.1:8000/404
