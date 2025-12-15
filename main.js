@@ -1,5 +1,3 @@
-// main.js - Повний код лабораторної роботи №5
-
 const http = require('node:http');
 const fs = require('node:fs').promises; // Для асинхронної роботи з файлами
 const path = require('node:path');
